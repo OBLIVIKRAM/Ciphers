@@ -156,6 +156,7 @@ class ceaser
     char input_copy[50]; //copy of plaintext for reference
 public:
     void encrypt_ceaser();
+    void decrypt_ceaser();
     void display_ceaser();
 } c1;
 
@@ -168,7 +169,7 @@ void ceaser::encrypt_ceaser()
     strcpy(input_copy, word);
     cout << "Enter shift of each letter (a number) : " << endl;
     cin >> key;
-    key = key % 26;
+    
     int i, j, l;
     l = strlen(word);
     cout << "\nThe encrypted message is: ";
@@ -176,7 +177,7 @@ void ceaser::encrypt_ceaser()
     {
         char ch;
         ch = word[i];
-        if (ch >= 'a' && ch <= 'z')
+        if (ch >= 'A' && ch <= 'z')
         {
             ch = ch + key;
             if (ch > 'z')
@@ -195,12 +196,49 @@ void ceaser::encrypt_ceaser()
         }
         cout << word[i];
     }
+    c1.decrypt_ceaser();
+    
+} //end of void encrypt_ceaser
+  // fn for decrytion of ceaser cipher
+  void ceaser::decrypt_ceaser()
+  {
+    cout << "\nEnter your message to decrypt:" << endl;
+    fflush(stdin);
+    gets(word);
+    strcpy(input_copy, word);
+    cout << "Enter shift of each letter (a number) : " << endl;
+    cin >> key;
+      int i, j, l;
+    l = strlen(word);
+    cout << "\nThe decrypted message is: ";
+    for (int i = 0; word[i] != '\0'; ++i)
+    {
+        char ch;
+        ch = word[i];
+        if (ch >= 'a' && ch <= 'z')
+        {
+            ch = ch - key;
+            if (ch < 'a')
+                ch = ch + 'z' - 'a' + 1;
+            word[i] = ch;
+        }
+        //decrypt for uppercase letter
+        else if (ch >= 'A' && ch <= 'Z')
+        {
+            ch = ch - key;
+            if (ch < 'A')
+            {
+                ch = ch + 'Z' - 'A' + 1;
+            }
+            word[i] = ch;
+        }
+        cout << word[i];
+    }
     cout << "\n\nEnter any key to know about the working of CEASER'S SHIFT: ";
     char ch;
     cin >> ch;
     display_ceaser();
-} //end of void encrypt_ceaser
-
+  }
 //fn that contains information about the ceaser cipher
 void ceaser::display_ceaser()
 {
